@@ -1,0 +1,20 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /
+    
+logging:
+  config: classpath:logback/logback-spring.xml
+  
+spring:
+  profiles:
+    active: local
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true

@@ -21,19 +21,19 @@ public class BoardController {
 	// @AuthenticationPrincipal PrincipalDetail principal
 	@GetMapping({"", "/"})
 	public String index(Model model, @PageableDefault(size=3, sort="id", direction = Sort.Direction.DESC) Pageable pageable) {  
-		model.addAttribute("boards", boardService.글목록(pageable));
+		model.addAttribute("boards", boardService.getPosts(pageable));
 		return "index"; // viewResolver 작동!!
 	}
 	
 	@GetMapping("/board/{id}")
 	public String findById(@PathVariable int id, Model model) {
-		model.addAttribute("board", boardService.글상세보기(id));
+		model.addAttribute("board", boardService.getPost(id));
 		return "board/detail";
 	}
 	
 	@GetMapping("/board/{id}/updateForm")
 	public String updateForm(@PathVariable int id, Model model) {
-		model.addAttribute("board", boardService.글상세보기(id));
+		model.addAttribute("board", boardService.getPost(id));
 		return "board/updateForm";
 	}
 	

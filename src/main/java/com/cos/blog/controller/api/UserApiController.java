@@ -36,7 +36,7 @@ public class UserApiController {
 
 	@PutMapping("/user")
 	public ResponseDto<Integer> update(@RequestBody User user) { // key=value, x-www-form-urlencoded
-		userService.회원수정(user);
+		userService.updateMember(user);
 		// 여기서는 트랜잭션이 종료되기 때문에 DB에 값은 변경이 됐음.
 		// 하지만 세션값은 변경되지 않은 상태이기 때문에 우리가 직접 세션값을 변경해줄 것임.
 		// 세션 등록

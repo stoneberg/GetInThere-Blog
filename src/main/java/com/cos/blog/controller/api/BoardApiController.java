@@ -23,13 +23,13 @@ public class BoardApiController {
 	
 	@PostMapping("/api/board")
 	public ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
-		boardService.글쓰기(board, principal.getUser());
+		boardService.addPost(board, principal.getUser());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
 	}
 	
 	@DeleteMapping("/api/board/{id}")
 	public ResponseDto<Integer> deleteById(@PathVariable int id){
-		boardService.글삭제하기(id);
+		boardService.deletePost(id);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
 	}
 	
@@ -38,7 +38,7 @@ public class BoardApiController {
 		System.out.println("BoardApiController : update : id : "+id);
 		System.out.println("BoardApiController : update : board : "+board.getTitle());
 		System.out.println("BoardApiController : update : board : "+board.getContent());
-		boardService.글수정하기(id, board);
+		boardService.modifyPost(id, board);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	

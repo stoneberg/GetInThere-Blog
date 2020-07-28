@@ -13,7 +13,7 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: update
     properties:
       hibernate.default_batch_fetch_size: 500
       hibernate.jdbc.lob.non_contextual_creation: true

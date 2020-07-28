@@ -13,27 +13,30 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter
+@Setter
 @Entity
+@ToString(exclude = { "replies", "user" })
+@EqualsAndHashCode(exclude = { "replies", "user" })
+@NamedEntityGraph(name = "board.replies.user", attributeNodes = { @NamedAttributeNode("replies"), @NamedAttributeNode("user"), })
 @Table(name = "blog_board")
 public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private int id;
+    private Integer id;
 
     @Column(nullable = false, length = 100)
     private String title;
@@ -41,16 +44,16 @@ public class Board {
     @Lob // 대용량 데이터
     private String content; // 섬머노트 라이브러리 <html>태그가 섞여서 디자인이 됨.
 
-    private int count; // 조회수
+    private Integer count; // 조회수
 
-    @ManyToOne(fetch = FetchType.LAZY) // Many = Many, User = One
+    @ManyToOne(fetch = FetchType.LAZY) // Board => Many, User => One
     @JoinColumn(name = "userId")
     private User user; // DB는 오브젝트를 저장할 수 없다. FK, 자바는 오브젝트를 저장할 수 있다.
 
-    @Builder.Default
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY) // mappedBy 연관관계의 주인이 아니다 (난 FK가 아니에요) DB에 칼럼을 만들지 마세요.
-    private List<Reply> reply = new ArrayList<>();
+    private List<Reply> replies = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createDate;
+
 }

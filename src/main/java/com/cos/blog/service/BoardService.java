@@ -31,7 +31,14 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Board getPost(int id) {
         return boardRepository.findById(id).orElseThrow(() -> {
-            return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다.");
+            return new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id));
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public Board getPostLazy(int id) {
+        return boardRepository.findBoardById(id).orElseThrow(() -> {
+            return new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id));
         });
     }
 

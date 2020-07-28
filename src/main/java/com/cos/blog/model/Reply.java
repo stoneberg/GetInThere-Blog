@@ -14,21 +14,21 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@ToString(exclude = { "board", "user" })
+@EqualsAndHashCode(exclude = { "board", "user" })
+@Getter
+@Setter
 @Entity
 @Table(name = "blog_board_replay")
 public class Reply {
     @Id // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 프로젝트에서 연결된 DB의 넘버링 전략을 따라간다.
-    private int id; // 시퀀스, auto_increment
+    private Integer id; // 시퀀스, auto_increment
 
     @Column(nullable = false, length = 200)
     private String content;
@@ -37,7 +37,7 @@ public class Reply {
     @JoinColumn(name = "boardId")
     private Board board;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
 

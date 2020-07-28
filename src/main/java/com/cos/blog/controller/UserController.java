@@ -100,9 +100,8 @@ public class UserController {
             e.printStackTrace();
         }
 
-        log.info("카카오 엑세스 토큰 : " + oauthToken.getAccessToken());
-
         log.info("===============================================================================");
+        log.info("카카오 엑세스 토큰 : " + oauthToken.getAccessToken());
         log.info("===============================================================================");
 
         RestTemplate rt2 = new RestTemplate();

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cos.blog.service.BoardService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class BoardController {
 
@@ -28,6 +31,10 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String findById(@PathVariable int id, Model model) {
         model.addAttribute("board", boardService.getPost(id));
+//        Board board = boardService.getPostLazy(id);
+//        log.info("@board================>{}", board);
+//        log.info("@board================>{}", board.getReplies());
+//        model.addAttribute("board", board);
         return "board/detail";
     }
 

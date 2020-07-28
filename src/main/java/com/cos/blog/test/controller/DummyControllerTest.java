@@ -1,4 +1,4 @@
-package com.cos.blog.test;
+package com.cos.blog.test.controller;
 
 import java.util.List;
 import java.util.function.Supplier;

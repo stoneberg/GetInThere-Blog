@@ -26,21 +26,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "blog_board_replay")
 public class Reply {
-    @Id //Primary key
+    @Id // Primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 프로젝트에서 연결된 DB의 넘버링 전략을 따라간다.
     private int id; // 시퀀스, auto_increment
 
     @Column(nullable = false, length = 200)
     private String content;
-    
-    @ManyToOne(fetch = FetchType.LAZY) 
-    @JoinColumn(name="boardId")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "boardId")
     private Board board;
-    
+
     @ManyToOne
-    @JoinColumn(name="userId")
+    @JoinColumn(name = "userId")
     private User user;
-    
+
     @CreationTimestamp
     private LocalDateTime createDate;
 }

@@ -24,7 +24,7 @@ public class UserService {
     public User findMember(String username) {
         return userRepository.findByUsername(username).orElseGet(User::new);
     }
-    
+
     @Transactional
     public void joinMember(User user) {
         String rawPassword = user.getPassword(); // 1234 원문
@@ -41,7 +41,7 @@ public class UserService {
         // 영속화된 오브젝트를 변경하면 자동으로 DB에 update문을 날려주거든요.
         User persistance = userRepository.findById(user.getId())
                 .orElseThrow(() -> new IllegalArgumentException("회원 찾기 실패"));
-        
+
         // Validate 체크 => oauth 필드에 값이 없으면 수정 가능
         // 즉 소셜 로그인이 아닌 경우만 비밀번호 변경 처리
         if (!StringUtils.hasText(persistance.getOauth())) {
@@ -50,7 +50,7 @@ public class UserService {
             persistance.setPassword(encPassword);
             persistance.setEmail(user.getEmail());
         }
-        
+
         // 회원수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit 이 자동으로 됩니다.
         // 영속화된 persistance 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려줌.
     }

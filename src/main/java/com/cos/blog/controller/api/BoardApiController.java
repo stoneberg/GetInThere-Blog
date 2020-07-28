@@ -17,33 +17,29 @@ import com.cos.blog.service.BoardService;
 
 @RestController
 public class BoardApiController {
-    
+
     @Autowired
     private BoardService boardService;
-    
+
     @PostMapping("/api/board")
     public ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
         boardService.addPost(board, principal.getUser());
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
-    
+
     @DeleteMapping("/api/board/{id}")
-    public ResponseDto<Integer> deleteById(@PathVariable int id){
+    public ResponseDto<Integer> deleteById(@PathVariable int id) {
         boardService.deletePost(id);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
-    
+
     @PutMapping("/api/board/{id}")
-    public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board){
-        System.out.println("BoardApiController : update : id : "+id);
-        System.out.println("BoardApiController : update : board : "+board.getTitle());
-        System.out.println("BoardApiController : update : board : "+board.getContent());
+    public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board) {
+        System.out.println("BoardApiController : update : id : " + id);
+        System.out.println("BoardApiController : update : board : " + board.getTitle());
+        System.out.println("BoardApiController : update : board : " + board.getContent());
         boardService.modifyPost(id, board);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
-    
-    
+
 }
-
-
-

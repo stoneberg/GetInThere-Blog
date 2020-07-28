@@ -9,11 +9,12 @@
         </layout>
     </appender>
 
+    <!-- file appender -->
     <appender name="FILEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
         <prudent>true</prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/dev-log/aws-demo/aws.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>/dev-log/cos-blog/cos-blog.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">

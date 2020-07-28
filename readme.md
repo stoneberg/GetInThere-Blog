@@ -2,6 +2,7 @@
 
 1. 출처: 
  - https://github.com/codingspecialist/Springboot-JPA-Blog
+ - https://www.youtube.com/channel/UCVrhnbfe78ODeQglXtT1Elw
 
 2. 변경 사항:
  - MySQL에서 Postgresql로 변경

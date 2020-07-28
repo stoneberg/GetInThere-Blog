@@ -33,8 +33,9 @@ public class Reply {
     @Column(nullable = false, length = 200)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // 연관관계의 주인
     @JoinColumn(name = "boardId")
+    // @JsonBackReference // 순환 참조를 막기 위한 어노테이션. 자식(child)에 붙여야 작동한다.
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)

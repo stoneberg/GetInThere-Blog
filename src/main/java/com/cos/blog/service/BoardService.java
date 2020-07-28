@@ -16,6 +16,12 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
 
+    /**
+     * 게시글 등록
+     * 
+     * @param board
+     * @param user
+     */
     @Transactional
     public void addPost(Board board, User user) { // title, content
         board.setCount(0);
@@ -23,11 +29,23 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    /**
+     * 게시글 전체 조회
+     * 
+     * @param pageable
+     * @return
+     */
     @Transactional(readOnly = true)
     public Page<Board> getPosts(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
+    /**
+     * 게시글 단건 조회
+     * 
+     * @param id
+     * @return
+     */
     @Transactional(readOnly = true)
     public Board getPost(int id) {
         return boardRepository.findById(id).orElseThrow(() -> {
@@ -35,9 +53,28 @@ public class BoardService {
         });
     }
 
+    /**
+     * 게시글 단건 조회(entity graph)
+     * 
+     * @param id
+     * @return
+     */
     @Transactional(readOnly = true)
-    public Board getPostLazy(int id) {
-        return boardRepository.findBoardById(id).orElseThrow(() -> {
+    public Board getPostByEntityGraph(int id) {
+        return boardRepository.findEntityGraphBoardById(id).orElseThrow(() -> {
+            return new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id));
+        });
+    }
+
+    /**
+     * 게시글 단건 조회(fetch join)
+     * 
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public Board getPostByFetchJoin(int id) {
+        return boardRepository.findFetchJoinBoardById(id).orElseThrow(() -> {
             return new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id));
         });
     }

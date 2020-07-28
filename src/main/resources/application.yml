@@ -18,3 +18,4 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+#  jackson:#    serialization:#      fail-on-empty-beans: false

@@ -1,15 +1,15 @@
 
 
-INSERT INTO blog_users("id", create_date, email, oauth, "password", "role", username) 
-VALUES (1, '2020-07-28 12:44:59.529', 'stoneberg73@gmail.com', 'kakao', '$2a$10$RaT5SdU2J2T0Z3WbFta1Xu1reYzDNZj8Z9sfApBRGjcygbtY8mkcK', 'USER', 'stoneberg73@gmail.com_1406853202');
-INSERT INTO blog_users("id", create_date, email, oauth, "password", "role", username) 
-VALUES (2, '2020-07-28 13:45:58.373', 'zetlee@gmail.com', null, '$2a$10$zWTpW5pBEDBaRbuHVfrrkuaEyqZA.KEU8Ux3vT7d/RhcE2Mk5ekRO', 'USER', 'zetlee');
-INSERT INTO blog_users("id", create_date, email, oauth, "password", "role", username) 
-VALUES (3, '2020-07-28 13:48:42.443', 'redfoxer@gmail.com', null, '$2a$10$DlAvdOBkkBbKFoZj6Gu4f.Ud075tvHM7QYh1Yvtf9J/UUF8vJHsNK', 'USER', 'redfoxer');
+INSERT INTO blog_users(create_date, email, oauth, "password", "role", username) 
+VALUES ('2020-07-28 12:44:59.529', 'stoneberg73@gmail.com', 'kakao', '$2a$10$RaT5SdU2J2T0Z3WbFta1Xu1reYzDNZj8Z9sfApBRGjcygbtY8mkcK', 'USER', 'stoneberg73@gmail.com_1406853202');
+INSERT INTO blog_users(create_date, email, oauth, "password", "role", username) 
+VALUES ('2020-07-28 13:45:58.373', 'zetlee@gmail.com', null, '$2a$10$zWTpW5pBEDBaRbuHVfrrkuaEyqZA.KEU8Ux3vT7d/RhcE2Mk5ekRO', 'USER', 'zetlee');
+INSERT INTO blog_users(create_date, email, oauth, "password", "role", username) 
+VALUES ('2020-07-28 13:48:42.443', 'redfoxer@gmail.com', null, '$2a$10$DlAvdOBkkBbKFoZj6Gu4f.Ud075tvHM7QYh1Yvtf9J/UUF8vJHsNK', 'USER', 'redfoxer');
 
 -- content @Lob
-INSERT INTO blog_board("id", "content", "count", create_date, title, user_id) 
-VALUES (2, '19192', 0, '2020-07-28 14:23:12.719', 'This is new era', 1);
+INSERT INTO blog_board("content", "count", create_date, title, user_id) 
+VALUES ('19192', 0, '2020-07-28 14:23:12.719', 'This is new era', 1);
 
 
 INSERT INTO blog_board_replay(CONTENT, board_id, USER_id, create_date)

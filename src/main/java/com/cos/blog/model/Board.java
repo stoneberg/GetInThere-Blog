@@ -13,12 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,7 +30,6 @@ import lombok.ToString;
 @Entity
 @ToString(exclude = { "replies", "user" })
 @EqualsAndHashCode(exclude = { "replies", "user" })
-@NamedEntityGraph(name = "board.replies.user", attributeNodes = { @NamedAttributeNode("replies"), @NamedAttributeNode("user"), })
 @Table(name = "blog_board")
 public class Board {
 
@@ -51,6 +50,7 @@ public class Board {
     private User user; // DB는 오브젝트를 저장할 수 없다. FK, 자바는 오브젝트를 저장할 수 있다.
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY) // mappedBy 연관관계의 주인이 아니다 (난 FK가 아니에요) DB에 칼럼을 만들지 마세요.
+    @JsonIgnoreProperties({ "board" }) // entity 직접 json 변환 시 순환 참조 방지
     private List<Reply> replies = new ArrayList<>();
 
     @CreationTimestamp

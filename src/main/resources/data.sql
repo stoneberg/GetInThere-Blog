@@ -22,50 +22,51 @@ INSERT INTO blog_board_replay(CONTENT, board_id, USER_id, create_date)
 VALUES ('third reply', 1, 3, now());
 
 
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool01');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool02');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool03');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool04');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool05');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool06');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool07');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool08');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool09');
-INSERT INTO blog_academy("name") VALUES ('GangNamSchool10');
+-- blog_academy
+INSERT INTO blog_academy(name) VALUES ('IT-School-01');
+INSERT INTO blog_academy(name) VALUES ('IT-School-02');
+INSERT INTO blog_academy(name) VALUES ('IT-School-03');
+INSERT INTO blog_academy(name) VALUES ('IT-School-04');
+INSERT INTO blog_academy(name) VALUES ('IT-School-05');
+INSERT INTO blog_academy(name) VALUES ('IT-School-06');
+INSERT INTO blog_academy(name) VALUES ('IT-School-07');
+INSERT INTO blog_academy(name) VALUES ('IT-School-08');
+INSERT INTO blog_academy(name) VALUES ('IT-School-09');
+INSERT INTO blog_academy(name) VALUES ('IT-School-10');
 
+-- blog_teacher
+INSERT INTO blog_teacher(name) VALUES ('Teacher-01');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-02');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-03');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-04');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-05');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-06');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-07');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-08');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-09');
+INSERT INTO blog_teacher(name) VALUES ('Teacher-10');
 
-INSERT INTO blog_teacher("name") VALUES ('Teacher01');
-INSERT INTO blog_teacher("name") VALUES ('Teacher02');
-INSERT INTO blog_teacher("name") VALUES ('Teacher03');
-INSERT INTO blog_teacher("name") VALUES ('Teacher04');
-INSERT INTO blog_teacher("name") VALUES ('Teacher05');
-INSERT INTO blog_teacher("name") VALUES ('Teacher06');
-INSERT INTO blog_teacher("name") VALUES ('Teacher07');
-INSERT INTO blog_teacher("name") VALUES ('Teacher08');
-INSERT INTO blog_teacher("name") VALUES ('Teacher09');
-INSERT INTO blog_teacher("name") VALUES ('Teacher10');
-
-
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev1', 1, 1);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev2', 2, 2);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev3', 3, 3);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev4', 4, 4);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev5', 5, 5);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev6', 6, 6);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev7', 7, 7);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev8', 8, 8);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev9', 9, 9);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev010', 10, 10);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev011', 1, 1);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev012', 2, 2);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev012', 3, 3);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev014', 4, 4);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev015', 5, 5);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev016', 6, 6);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev017', 7, 7);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev018', 8, 8);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev019', 9, 9);
-INSERT INTO blog_subject("name", academy_id, teacher_id) VALUES ('JavaWebDev020', 10, 10);
+-- blog_subject
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-01', 1, 1);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-11', 1, 1);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-02', 2, 2);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-12', 2, 2);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-03', 3, 3);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-13', 3, 3);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-04', 4, 4);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-14', 4, 4);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-05', 5, 5);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-15', 5, 5);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-06', 6, 6);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-16', 6, 6);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-07', 7, 7);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-17', 7, 7);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-08', 8, 8);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-18', 8, 8);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-09', 9, 9);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-19', 9, 9);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-10', 10, 10);
+INSERT INTO blog_subject(name, academy_id, teacher_id) VALUES ('JavaWebDev-20', 10, 10);
 
 
 

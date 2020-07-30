@@ -35,7 +35,6 @@ public class BoardService {
      * @param pageable
      * @return
      */
-    @Transactional(readOnly = true)
     public Page<Board> getPosts(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
@@ -46,11 +45,9 @@ public class BoardService {
      * @param id
      * @return
      */
-    @Transactional(readOnly = true)
     public Board getPost(int id) {
-        return boardRepository.findById(id).orElseThrow(() -> {
-            return new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id));
-        });
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
     }
 
     /**
@@ -59,11 +56,9 @@ public class BoardService {
      * @param id
      * @return
      */
-    @Transactional(readOnly = true)
     public Board getPostByEntityGraph(int id) {
-        return boardRepository.findEntityGraphBoardById(id).orElseThrow(() -> {
-            return new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id));
-        });
+        return boardRepository.findEntityGraphBoardById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
     }
 
     /**
@@ -72,24 +67,31 @@ public class BoardService {
      * @param id
      * @return
      */
-    @Transactional(readOnly = true)
     public Board getPostByFetchJoin(int id) {
-        return boardRepository.findFetchJoinBoardById(id).orElseThrow(() -> {
-            return new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id));
-        });
+        return boardRepository.findFetchJoinBoardById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
     }
 
+    /**
+     * 게시글 삭제
+     * 
+     * @param id
+     */
     @Transactional
     public void deletePost(int id) {
         System.out.println("글삭제하기 : " + id);
         boardRepository.deleteById(id);
     }
 
+    /**
+     * 게시글 수정
+     * 
+     * @param id
+     * @param requestBoard
+     */
     @Transactional
     public void modifyPost(int id, Board requestBoard) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> {
-            return new IllegalArgumentException("글 찾기 실패 : 아이디를 찾을 수 없습니다.");
-        }); // 영속화 완료
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("글 찾기 실패 : 아이디를 찾을 수 없습니다.")); // 영속화 완료
         board.setTitle(requestBoard.getTitle());
         board.setContent(requestBoard.getContent());
         // 해당 함수로 종료시(Service가 종료될 때) 트랜잭션이 종료됩니다. 이때 더티체킹 - 자동 업데이트가 됨. db flush

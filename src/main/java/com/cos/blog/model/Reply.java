@@ -30,6 +30,7 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 프로젝트에서 연결된 DB의 넘버링 전략을 따라간다.
     private Integer id; // 시퀀스, auto_increment
 
+    // 댓글
     @Column(nullable = false, length = 200)
     private String content;
 

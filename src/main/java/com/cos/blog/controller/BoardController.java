@@ -21,6 +21,12 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    // save form 이동 - USER 권한이 필요
+    @GetMapping("/board/saveForm")
+    public String saveForm() {
+        return "board/saveForm";
+    }
+
     // 컨트롤로에서 세션을 어떻게 찾는지?
     // @AuthenticationPrincipal PrincipalDetail principal
     @GetMapping({ "", "/" })
@@ -30,24 +36,20 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String findById(@PathVariable int id, Model model) {
+    public String findById(@PathVariable Integer id, Model model) {
+        log.info("findById=====================>{}", id);
         // model.addAttribute("board", boardService.getPost(id));
-        Board board = boardService.getPostByEntityGraph(id);
-        // Board board = boardService.getPostByFetchJoin(id);
+        // Board board = boardService.getPostByEntityGraph(id);
+        Board board = boardService.getPostByFetchJoin(id);
         log.info("@board=======>{}", board);
         model.addAttribute("board", board);
         return "board/detail";
     }
 
     @GetMapping("/board/{id}/updateForm")
-    public String updateForm(@PathVariable int id, Model model) {
+    public String updateForm(@PathVariable Integer id, Model model) {
         model.addAttribute("board", boardService.getPost(id));
         return "board/updateForm";
     }
 
-    // USER 권한이 필요
-    @GetMapping("/board/saveForm")
-    public String saveForm() {
-        return "board/saveForm";
-    }
 }

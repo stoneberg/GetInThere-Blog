@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
+import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,39 +26,53 @@ public class BoardApiController {
     @Autowired
     private BoardService boardService;
 
+    /**
+     * 게시글 API
+     */
+
     @GetMapping("/api/v1/board/{id}")
     public ResponseDto<?> findByIdV1(@PathVariable("id") Integer id) {
         Board board = boardService.getPostByFetchJoin(id);
         log.info("@board=======>{}", board);
-        return new ResponseDto<>(HttpStatus.OK.value(), board);
+        return new ResponseDto<>(HttpStatus.OK, board);
     }
 
     @GetMapping("/api/v2/board/{id}")
     public ResponseDto<?> findByIdV2(@PathVariable("id") Integer id) {
         Board board = boardService.getPostByEntityGraph(id);
         log.info("@board=======>{}", board);
-        return new ResponseDto<>(HttpStatus.OK.value(), board);
+        return new ResponseDto<>(HttpStatus.OK, board);
     }
 
     @PostMapping("/api/board")
-    public ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
-        boardService.addPost(board, principal.getUser());
-        return new ResponseDto<>(HttpStatus.OK.value(), 1);
+    public ResponseDto<?> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
+        return new ResponseDto<>(HttpStatus.CREATED, boardService.addPost(board, principal.getUser()));
     }
 
     @DeleteMapping("/api/board/{id}")
-    public ResponseDto<Integer> deleteById(@PathVariable int id) {
+    public ResponseDto<?> deleteById(@PathVariable("id") Integer id) {
         boardService.deletePost(id);
-        return new ResponseDto<>(HttpStatus.OK.value(), 1);
+        return new ResponseDto<>(HttpStatus.OK, id);
     }
 
     @PutMapping("/api/board/{id}")
-    public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board) {
+    public ResponseDto<?> update(@PathVariable("id") Integer id, @RequestBody Board board) {
         System.out.println("BoardApiController : update : id : " + id);
         System.out.println("BoardApiController : update : board : " + board.getTitle());
         System.out.println("BoardApiController : update : board : " + board.getContent());
         boardService.modifyPost(id, board);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseDto<>(HttpStatus.OK, id);
+    }
+
+    /**
+     * 댓글 관련 API
+     */
+
+    @PostMapping("/api/board/{boardId}/reply")
+    public ResponseDto<?> save(@PathVariable("boardId") Integer boardId, @RequestBody Reply reply,
+            @AuthenticationPrincipal PrincipalDetail principal) {
+        boardService.addReply(boardId, reply, principal.getUser());
+        return new ResponseDto<>(HttpStatus.OK, 1);
     }
 
 }

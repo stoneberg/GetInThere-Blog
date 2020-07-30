@@ -26,12 +26,13 @@ public class UserService {
     }
 
     @Transactional
-    public void joinMember(User user) {
+    public Integer joinMember(User user) {
         String rawPassword = user.getPassword(); // 1234 원문
         String encPassword = encoder.encode(rawPassword); // 해쉬
         user.setPassword(encPassword);
         user.setRole(RoleType.USER);
         userRepository.save(user);
+        return user.getId();
     }
 
     @Transactional
@@ -39,8 +40,7 @@ public class UserService {
         // 수정시에는 영속성 컨텍스트 User 오브젝트를 영속화시키고, 영속화된 User 오브젝트를 수정
         // select를 해서 User오브젝트를 DB로 부터 가져오는 이유는 영속화를 하기 위해서!!
         // 영속화된 오브젝트를 변경하면 자동으로 DB에 update문을 날려주거든요.
-        User persistance = userRepository.findById(user.getId())
-                .orElseThrow(() -> new IllegalArgumentException("회원 찾기 실패"));
+        User persistance = userRepository.findById(user.getId()).orElseThrow(() -> new IllegalArgumentException("회원 찾기 실패"));
 
         // Validate 체크 => oauth 필드에 값이 없으면 수정 가능
         // 즉 소셜 로그인이 아닌 경우만 비밀번호 변경 처리

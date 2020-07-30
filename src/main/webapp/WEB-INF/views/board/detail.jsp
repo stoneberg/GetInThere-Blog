@@ -29,8 +29,13 @@
     
     <!--  reply -->
     <div class="card">
-        <div class="card-body"><textarea class="form-control noresize" maxlength="200"></textarea></div>
-        <div class="card-footer"><button class="btn btn-primary">등록</button></div>
+        <form>
+            <input type="hidden" id="boardId" value="${board.id}">
+	        <div class="card-body">
+	           <textarea id="reply-content" class="form-control noresize" maxlength="200"></textarea>
+	       </div>
+        </form>
+	    <div class="card-footer"><button id="btn-reply-save" class="btn btn-primary">등록</button></div>
     </div>
     
     <!-- view controller에서 반환된 model은 직접 nested object를 호출하지 않는 이상 순환 참조가 발생하지는 않는다. -->

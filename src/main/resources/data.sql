@@ -9,17 +9,17 @@ VALUES ('2020-07-28 13:48:42.443', 'redfoxer@gmail.com', null, '$2a$10$DlAvdOBkk
 
 -- content @Lob
 INSERT INTO blog_board("content", "count", create_date, title, user_id) 
-VALUES ('19192', 0, '2020-07-28 14:23:12.719', 'This is new era', 1);
+VALUES ('19192', 0, '2020-07-28 14:23:12.719', 'We live in an new era!!!!', 1);
 
 
 INSERT INTO blog_board_replay(CONTENT, board_id, USER_id, create_date)
-VALUES ('first reply', 1, 2, now());
+VALUES ('First reply', 1, 2, now());
 
 INSERT INTO blog_board_replay(CONTENT, board_id, USER_id, create_date)
-VALUES ('second reply', 1, 2, now());
+VALUES ('Second reply', 1, 2, now());
 
 INSERT INTO blog_board_replay(CONTENT, board_id, USER_id, create_date)
-VALUES ('third reply', 1, 3, now());
+VALUES ('Third reply', 1, 3, now());
 
 
 -- blog_academy

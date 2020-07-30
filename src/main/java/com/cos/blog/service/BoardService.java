@@ -15,7 +15,9 @@ import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -135,12 +137,13 @@ public class BoardService {
      * 게시글에 대한 댓글 삭제
      */
     @Transactional
-    public void deleteReply(Integer replyId, User user) throws CommonAppException {
+    public void deleteReply(Integer boardId, Integer replyId, User user) throws CommonAppException {
         Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new CommonAppException("글 찾기 실패 : 댓글을 찾을 수 없습니다."));
         User replyUser = reply.getUser();
 
-        if (!replyUser.equals(user)) {
-            replyRepository.deleteById(replyId);
+        if (replyUser.equals(user)) {
+            log.info("replyUser===user===================>{}", replyUser.equals(user));
+            replyRepository.deleteByIdAndBoardId(replyId, boardId);
         }
 
     }

@@ -128,9 +128,10 @@ public class BoardApiController {
      * @throws CommonAppException
      */
     @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
-    public ResponseDto<?> deleteReplyById(@PathVariable("replyId") Integer replyId, @AuthenticationPrincipal PrincipalDetail principal)
+    public ResponseDto<?> deleteReplyById(@PathVariable("boardId") Integer boardId, @PathVariable("replyId") Integer replyId,
+            @AuthenticationPrincipal PrincipalDetail principal)
             throws CommonAppException {
-        boardService.deleteReply(replyId, principal.getUser());
+        boardService.deleteReply(boardId, replyId, principal.getUser());
         return new ResponseDto<>(HttpStatus.OK);
     }
 

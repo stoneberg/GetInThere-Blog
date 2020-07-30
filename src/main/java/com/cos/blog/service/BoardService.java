@@ -133,16 +133,22 @@ public class BoardService {
         return reply.getId();
     }
 
-    /*
+    /**
      * 게시글에 대한 댓글 삭제
+     * 
+     * @param boardId
+     * @param replyId
+     * @param user
+     * @throws CommonAppException
      */
     @Transactional
     public void deleteReply(Integer boardId, Integer replyId, User user) throws CommonAppException {
         Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new CommonAppException("글 찾기 실패 : 댓글을 찾을 수 없습니다."));
         User replyUser = reply.getUser();
 
+        // 로그인 사용자와 댓글 작성자가 동일인일 경우 삭제 가능
         if (replyUser.equals(user)) {
-            log.info("replyUser===user===================>{}", replyUser.equals(user));
+            log.info("[replyUser===user]===================>{}", replyUser.equals(user));
             replyRepository.deleteByIdAndBoardId(replyId, boardId);
         }
 

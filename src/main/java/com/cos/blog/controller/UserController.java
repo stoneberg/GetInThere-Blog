@@ -16,16 +16,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
+import com.cos.blog.common.format.OauthLoginUtil;
 import com.cos.blog.dto.UserReq.UserDto;
 import com.cos.blog.handler.CommonAppException;
 import com.cos.blog.model.KakaoProfile;
 import com.cos.blog.model.OAuthToken;
 import com.cos.blog.model.User;
 import com.cos.blog.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +41,7 @@ public class UserController {
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final OauthLoginUtil oauthLoginUtil;
 
     @GetMapping("/auth/joinForm")
     public String joinForm() {
@@ -87,22 +85,23 @@ public class UserController {
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
         // Http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음.
-        ResponseEntity<String> response = rt.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST,
+        ResponseEntity<String> oauthResponse = rt.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST,
                 kakaoTokenRequest, String.class);
 
         // Gson, Json Simple, ObjectMapper
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        OAuthToken oauthToken = null;
-        try {
-            oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+//        OAuthToken oauthToken = null;
+//        try {
+//            oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+//        } catch (JsonMappingException e) {
+//            e.printStackTrace();
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
 
         log.info("===============================================================================");
+        OAuthToken oauthToken = oauthLoginUtil.readKaKaoValue(oauthResponse, OAuthToken.class);
         log.info("카카오 엑세스 토큰 : " + oauthToken.getAccessToken());
         log.info("===============================================================================");
 
@@ -117,20 +116,25 @@ public class UserController {
         HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = new HttpEntity<>(headers2);
 
         // Http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음.
-        ResponseEntity<String> response2 = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
+        ResponseEntity<String> profileResponse = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
                 kakaoProfileRequest2, String.class);
-        log.info(response2.getBody());
+        log.info(profileResponse.getBody());
 
-        ObjectMapper objectMapper2 = new ObjectMapper();
-        objectMapper2.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-        KakaoProfile kakaoProfile = null;
-        try {
-            kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+//        ObjectMapper objectMapper2 = new ObjectMapper();
+//        objectMapper2.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+//        KakaoProfile kakaoProfile = null;
+//        try {
+//            kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+//        } catch (JsonMappingException e) {
+//            e.printStackTrace();
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+
+        log.info("===============================================================================");
+        KakaoProfile kakaoProfile = oauthLoginUtil.readKaKaoValue(profileResponse, KakaoProfile.class);
+        log.info("카카오 엑세스 토큰 : " + kakaoProfile.getKakaoAccount());
+        log.info("===============================================================================");
 
         // User 오브젝트 : username, password, email
         log.info("카카오 아이디(번호) : " + kakaoProfile.getId());

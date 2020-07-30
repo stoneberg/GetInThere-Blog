@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.config.auth.PrincipalDetail;
+import com.cos.blog.dto.BoardReq.BoardDto;
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
@@ -43,8 +44,8 @@ public class BoardApiController {
     }
 
     @PostMapping("/api/board")
-    public ResponseDto<?> savePost(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
-        return new ResponseDto<>(HttpStatus.CREATED, boardService.addPost(board, principal.getUser()));
+    public ResponseDto<?> savePost(@RequestBody BoardDto boardDto, @AuthenticationPrincipal PrincipalDetail principal) {
+        return new ResponseDto<>(HttpStatus.CREATED, boardService.addPost(boardDto, principal.getUser()));
     }
 
     @DeleteMapping("/api/board/{id}")

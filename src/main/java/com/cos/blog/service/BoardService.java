@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.blog.dto.BoardReq.BoardDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
@@ -28,7 +29,8 @@ public class BoardService {
      * @param user
      */
     @Transactional
-    public Integer addPost(Board board, User user) { // title, content
+    public Integer addPost(BoardDto boardDto, User user) { // title, content
+        Board board = boardDto.toEntity();
         board.setCount(0);
         board.setUser(user);
         boardRepository.save(board);

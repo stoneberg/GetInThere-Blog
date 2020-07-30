@@ -52,4 +52,12 @@ public class User {
     @CreationTimestamp
     private Timestamp createDate;
 
+    @Builder
+    public User(String username, String password, String email) {
+        super();
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
 }

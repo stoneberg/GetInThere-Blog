@@ -35,9 +35,10 @@
 	           <textarea id="reply-content" class="form-control noresize" maxlength="200"></textarea>
 	       </div>
         </form>
-	    <div class="card-footer"><button id="btn-reply-save" class="btn btn-primary">등록</button></div>
+	    <div class="card-footer"><button type="button" id="btn-reply-save" class="btn btn-primary">등록</button></div>
     </div>
-    
+    <br />
+    <hr />
     <!-- view controller에서 반환된 model은 직접 nested object를 호출하지 않는 이상 순환 참조가 발생하지는 않는다. -->
     <!-- board.replies.board로 호출할 경우 순환 참조가 발생함단.  -->
     <div class="card">

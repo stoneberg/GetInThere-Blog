@@ -30,16 +30,19 @@
 
             <c:choose>
                 <c:when test="${empty principal}">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="/auth/loginForm">로그인</a></li>
                         <li class="nav-item"><a class="nav-link" href="/auth/joinForm">회원가입</a></li>
                     </ul>
                 </c:when>
                 <c:otherwise>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="/board/saveForm">글쓰기</a></li>
                         <li class="nav-item"><a class="nav-link" href="/user/updateForm">회원정보</a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+                    </ul>
+                    <ul class="navbar-nav navbar-light">
+                        <li class="nav-item"><a class="nav-link" href="#">${principal.user.email}</a></li>
                     </ul>
                 </c:otherwise>
             </c:choose>

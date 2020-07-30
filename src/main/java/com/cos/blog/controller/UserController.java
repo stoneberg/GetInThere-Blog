@@ -16,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
+import com.cos.blog.dto.UserReq.UserDto;
 import com.cos.blog.model.KakaoProfile;
 import com.cos.blog.model.OAuthToken;
 import com.cos.blog.model.User;
@@ -139,7 +140,7 @@ public class UserController {
         // UUID란 -> 중복되지 않는 어떤 특정 값을 만들어내는 알고리즘
         log.info("블로그서버 패스워드 : " + cosKey);
 
-        User kakaoUser = User.builder().username(kakaoProfile.getKakaoAccount().getEmail() + "_" + kakaoProfile.getId())
+        UserDto kakaoUser = UserDto.builder().username(kakaoProfile.getKakaoAccount().getEmail() + "_" + kakaoProfile.getId())
                 .password(cosKey).email(kakaoProfile.getKakaoAccount().getEmail()).oauth("kakao").build();
 
         // 가입자 혹은 비가입자 체크 해서 처리

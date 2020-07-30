@@ -21,8 +21,10 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -31,6 +33,7 @@ import lombok.ToString;
 @Entity
 @ToString(exclude = { "replies", "user" })
 @EqualsAndHashCode(exclude = { "replies", "user" })
+@NoArgsConstructor
 @Table(name = "blog_board")
 public class Board {
 
@@ -57,5 +60,13 @@ public class Board {
 
     @CreationTimestamp
     private LocalDateTime createDate;
+
+    @Builder
+    public Board(String title, String content, Integer count) {
+        super();
+        this.title = title;
+        this.content = content;
+        this.count = count;
+    }
 
 }

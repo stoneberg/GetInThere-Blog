@@ -1,6 +1,5 @@
 package com.cos.blog.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -13,14 +12,15 @@ import com.cos.blog.handler.CommonAppException;
 import com.cos.blog.model.Board;
 import com.cos.blog.service.BoardService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 public class BoardController {
 
-    @Autowired
-    private BoardService boardService;
+    private final BoardService boardService;
 
     // save form 이동 - USER 권한이 필요
     @GetMapping("/board/saveForm")

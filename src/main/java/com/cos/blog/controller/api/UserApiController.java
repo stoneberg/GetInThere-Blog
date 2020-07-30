@@ -1,6 +1,5 @@
 package com.cos.blog.controller.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,17 +16,16 @@ import com.cos.blog.dto.UserReq.UserUpdateDto;
 import com.cos.blog.handler.CommonAppException;
 import com.cos.blog.service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 public class UserApiController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> save(@RequestBody UserDto userDto) throws CommonAppException { // username, password, email

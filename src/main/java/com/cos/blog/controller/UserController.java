@@ -1,7 +1,6 @@
 package com.cos.blog.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +27,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 // 인증이 안된 사용자들이 출입할 수 있는 경로를 /auth/** 허용
@@ -35,17 +35,15 @@ import lombok.extern.slf4j.Slf4j;
 // static이하에 있는 /js/**, /css/**, /image/**
 
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 public class UserController {
 
     @Value("${cos.key}")
     private String cosKey;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     @GetMapping("/auth/joinForm")
     public String joinForm() {

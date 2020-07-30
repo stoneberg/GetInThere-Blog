@@ -1,6 +1,5 @@
 package com.cos.blog.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,15 +12,15 @@ import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Transactional(readOnly = true)
     public User findMember(String username) {
@@ -31,9 +30,8 @@ public class UserService {
     @Transactional
     public Integer joinMember(UserDto userDto) throws CommonAppException {
 
-        if (Boolean.TRUE.equals(userRepository.existsByUsername(userDto.getUsername()))) {
-            throw new CommonAppException("이미 존재하는 회원입니다.");
-        } else if (Boolean.TRUE.equals(userRepository.existsByEmail(userDto.getEmail()))) {
+        if (Boolean.TRUE.equals(userRepository.existsByUsername(userDto.getUsername()))
+                || Boolean.TRUE.equals(userRepository.existsByEmail(userDto.getEmail()))) {
             throw new CommonAppException("이미 존재하는 회원입니다.");
         }
 

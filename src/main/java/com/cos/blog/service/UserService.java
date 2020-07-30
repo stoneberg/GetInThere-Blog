@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import com.cos.blog.dto.UserReq.UserDto;
 import com.cos.blog.dto.UserReq.UserUpdateDto;
+import com.cos.blog.handler.CommonAppException;
 import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.UserRepository;
@@ -28,7 +29,14 @@ public class UserService {
     }
 
     @Transactional
-    public Integer joinMember(UserDto userDto) {
+    public Integer joinMember(UserDto userDto) throws CommonAppException {
+
+        if (Boolean.TRUE.equals(userRepository.existsByUsername(userDto.getUsername()))) {
+            throw new CommonAppException("이미 존재하는 회원입니다.");
+        } else if (Boolean.TRUE.equals(userRepository.existsByEmail(userDto.getEmail()))) {
+            throw new CommonAppException("이미 존재하는 회원입니다.");
+        }
+
         User user = userDto.toEntity();
         String rawPassword = user.getPassword(); // 1234 원문
         String encPassword = encoder.encode(rawPassword); // 해쉬
@@ -39,11 +47,11 @@ public class UserService {
     }
 
     @Transactional
-    public void updateMember(UserUpdateDto userUpdateDto) {
+    public void updateMember(UserUpdateDto userUpdateDto) throws CommonAppException {
         // 수정시에는 영속성 컨텍스트 User 오브젝트를 영속화시키고, 영속화된 User 오브젝트를 수정
         // select를 해서 User오브젝트를 DB로 부터 가져오는 이유는 영속화를 하기 위해서!!
         // 영속화된 오브젝트를 변경하면 자동으로 DB에 update문을 날려주거든요.
-        User persistance = userRepository.findById(userUpdateDto.getId()).orElseThrow(() -> new IllegalArgumentException("회원 찾기 실패"));
+        User persistance = userRepository.findById(userUpdateDto.getId()).orElseThrow(() -> new CommonAppException("회원 찾기 실패"));
 
         // Validate 체크 => oauth 필드에 값이 없으면 수정 가능
         // 즉 소셜 로그인이 아닌 경우만 비밀번호 변경 처리

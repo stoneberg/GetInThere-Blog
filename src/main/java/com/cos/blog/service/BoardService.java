@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.dto.BoardReq;
 import com.cos.blog.dto.BoardReq.BoardDto;
+import com.cos.blog.handler.CommonAppException;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
@@ -53,10 +54,11 @@ public class BoardService {
      * 
      * @param id
      * @return
+     * @throws CommonAppException
      */
-    public Board getPost(int id) {
+    public Board getPost(int id) throws CommonAppException {
         return boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
+                .orElseThrow(() -> new CommonAppException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
     }
 
     /**
@@ -64,10 +66,11 @@ public class BoardService {
      * 
      * @param id
      * @return
+     * @throws CommonAppException
      */
-    public Board getPostByEntityGraph(int id) {
+    public Board getPostByEntityGraph(int id) throws CommonAppException {
         return boardRepository.findEntityGraphBoardById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
+                .orElseThrow(() -> new CommonAppException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
     }
 
     /**
@@ -77,10 +80,11 @@ public class BoardService {
      * 
      * @param id
      * @return
+     * @throws CommonAppException
      */
-    public Board getPostByFetchJoin(int id) {
+    public Board getPostByFetchJoin(int id) throws CommonAppException {
         return boardRepository.findFetchJoinBoardById(id)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
+                .orElseThrow(() -> new CommonAppException(String.format("글 상세보기 실패 : 게시글을 찾을 수 없습니다. id=%s", id)));
     }
 
     /**
@@ -99,13 +103,15 @@ public class BoardService {
      * 
      * @param id
      * @param requestBoard
+     * @throws CommonAppException
      */
     @Transactional
-    public void modifyPost(Integer id, Board requestBoard) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("글 찾기 실패 : 아이디를 찾을 수 없습니다.")); // 영속화 완료
-        board.setTitle(requestBoard.getTitle());
-        board.setContent(requestBoard.getContent());
-        // 해당 함수로 종료시(Service가 종료될 때) 트랜잭션이 종료됩니다. 이때 더티체킹 - 자동 업데이트가 됨. db flush
+    public void modifyPost(Integer id, BoardDto boardDto) throws CommonAppException {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new CommonAppException("글 찾기 실패 : 게시글을 찾을 수 없습니다.")); // 영속화 완료
+        board.setTitle(boardDto.getTitle());
+        board.setContent(boardDto.getContent());
+        // 해당 함수로 종료시(Service가 종료될 때) 트랜잭션이 종료됩니다. 이때 1차 캐시 dirty checking - 자동 업데이트가 됨.
+        // db flush
     }
 
     /**
@@ -113,15 +119,30 @@ public class BoardService {
      * 
      * @param replay
      * @param user
+     * @throws CommonAppException
      */
     @Transactional
-    public Integer addReply(Integer boardId, BoardReq.ReplyDto replyDto, User user) {
-        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("글 찾기 실패 : 아이디를 찾을 수 없습니다."));
+    public Integer addReply(Integer boardId, BoardReq.ReplyDto replyDto, User user) throws CommonAppException {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new CommonAppException("글 찾기 실패 : 게시글을 찾을 수 없습니다."));
         Reply reply = replyDto.toEntity();
         reply.setUser(user);
         reply.setBoard(board);
         replyRepository.save(reply);
         return reply.getId();
+    }
+
+    /*
+     * 게시글에 대한 댓글 삭제
+     */
+    @Transactional
+    public void deleteReply(Integer replyId, User user) throws CommonAppException {
+        Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new CommonAppException("글 찾기 실패 : 댓글을 찾을 수 없습니다."));
+        User replyUser = reply.getUser();
+
+        if (!replyUser.equals(user)) {
+            replyRepository.deleteById(replyId);
+        }
+
     }
 
 }

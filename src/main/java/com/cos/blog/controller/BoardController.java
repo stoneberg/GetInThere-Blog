@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.cos.blog.handler.CommonAppException;
 import com.cos.blog.model.Board;
 import com.cos.blog.service.BoardService;
 
@@ -36,7 +37,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String findById(@PathVariable Integer id, Model model) {
+    public String findById(@PathVariable Integer id, Model model) throws CommonAppException {
         log.info("findById=====================>{}", id);
         // model.addAttribute("board", boardService.getPost(id));
         // Board board = boardService.getPostByEntityGraph(id);
@@ -47,7 +48,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}/updateForm")
-    public String updateForm(@PathVariable Integer id, Model model) {
+    public String updateForm(@PathVariable Integer id, Model model) throws CommonAppException {
         model.addAttribute("board", boardService.getPost(id));
         return "board/updateForm";
     }

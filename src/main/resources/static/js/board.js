@@ -5,20 +5,25 @@ const blogBoard = {
      */
     init: function() {
         $("#btn-save").on("click", () => {
-            console.log("post-save==========>")
+            console.log("post-save==========>");
             this.savePost();
         });
         $("#btn-delete").on("click", () => {
-            console.log("post-delete========>")
+            console.log("post-delete========>");
             this.deletePost();
         });
         $("#btn-update").on("click", () => {
-            console.log("post-update========>")
+            console.log("post-update========>");
             this.updatePost();
         });
-        $("#btn-reply-save").on("click", (e) => {
-            console.log("reply-save========>")
+        $("#btn-reply-save").on("click", () => {
+            console.log("reply-save========>");
             this.saveReply();
+        });
+        $(".remove-reply").on("click", (e) => {
+            console.log("reply-delete========>");
+            const $this = $(e.currentTarget);
+            this.deleteReply($this);
         });
     },
 
@@ -47,11 +52,12 @@ const blogBoard = {
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
-        }).done(function(resp) {
+        }).done(function(res) {
+            console.log("res==========>", res);
             alert("글쓰기가 완료되었습니다.");
             location.href = "/";
         }).fail(function(error) {
-            alert(JSON.stringify(error));
+            alert(JSON.stringify(error.responseJSON.data));
         });
     },
 
@@ -65,11 +71,12 @@ const blogBoard = {
             type: "DELETE",
             url: "/api/board/" + id,
             dataType: "json"
-        }).done(function(resp) {
+        }).done(function(res) {
+            console.log("res==========>", res);
             alert("삭제가 완료되었습니다.");
             location.href = "/";
         }).fail(function(error) {
-            alert(JSON.stringify(error));
+            alert(JSON.stringify(error.responseJSON.data));
         });
     },
 
@@ -99,11 +106,12 @@ const blogBoard = {
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
-        }).done(function(resp) {
+        }).done(function(res) {
+            console.log("res==========>", res);
             alert("글수정이 완료되었습니다.");
             location.href = "/";
         }).fail(function(error) {
-            alert(JSON.stringify(error));
+            alert(JSON.stringify(error.responseJSON.data));
         });
     },
 
@@ -128,12 +136,35 @@ const blogBoard = {
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
-        }).done(function(resp) {
+        }).done(function(res) {
+            console.log("res==========>", res);
             alert("댓글 작성이 완료되었습니다.");
             location.href = "/board/" + boardId;
             //location.href = `/board/${boardId}`;
         }).fail(function(error) {
-            alert(JSON.stringify(error));
+            alert(JSON.stringify(error.responseJSON.data));
+        });
+    },
+    
+    /**
+     * 댓글 삭제
+     */
+     deleteReply: function($this) {
+        const boardId = $this.closest('li').data('board-id')
+        const replyId = $this.closest('li').data('reply-id')
+        console.log("@boardId/replyId====>", boardId, replyId);
+
+        $.ajax({
+            type: "DELETE",
+            url: "/api/board/" + boardId + "/reply/" + replyId,
+            dataType: "json"
+        }).done(function(res) {
+            console.log("res==========>", res);
+            alert("삭제가 완료되었습니다.");
+            location.href = "/board/" + boardId;
+            //location.href = `/board/${boardId}`;
+        }).fail(function(error) {
+            alert(JSON.stringify(error.responseJSON.data));
         });
     },
 }

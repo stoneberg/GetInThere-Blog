@@ -1,5 +1,6 @@
 package com.cos.blog.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.cos.blog.dto.UserReq.UserDto;
+import com.cos.blog.handler.CommonAppException;
 import com.cos.blog.model.KakaoProfile;
 import com.cos.blog.model.OAuthToken;
 import com.cos.blog.model.User;
@@ -60,9 +62,10 @@ public class UserController {
      * 
      * @param code
      * @return
+     * @throws CommonAppException
      */
     @GetMapping("/auth/kakao/callback")
-    public String kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
+    public String kakaoCallback(String code) throws CommonAppException { // Data를 리턴해주는 컨트롤러 함수
 
         // POST방식으로 key=value 데이터를 요청 (카카오쪽으로)
         // Retrofit2
@@ -139,8 +142,8 @@ public class UserController {
         log.info("블로그서버 이메일 : " + kakaoProfile.getKakaoAccount().getEmail());
         // UUID란 -> 중복되지 않는 어떤 특정 값을 만들어내는 알고리즘
         log.info("블로그서버 패스워드 : " + cosKey);
-
-        UserDto kakaoUser = UserDto.builder().username(kakaoProfile.getKakaoAccount().getEmail() + "_" + kakaoProfile.getId())
+        String kakaoUsername = StringUtils.substringBefore(kakaoProfile.getKakaoAccount().getEmail(), "@");
+        UserDto kakaoUser = UserDto.builder().username(kakaoUsername)
                 .password(cosKey).email(kakaoProfile.getKakaoAccount().getEmail()).oauth("kakao").build();
 
         // 가입자 혹은 비가입자 체크 해서 처리

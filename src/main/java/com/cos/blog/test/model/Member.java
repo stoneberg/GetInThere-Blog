@@ -1,4 +1,4 @@
-package com.cos.blog.test.controller;
+package com.cos.blog.test.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.blog.test.model.Member;
+
 // 사용자가 요청 -> 응답(HTML 파일)
 // @Controller
 

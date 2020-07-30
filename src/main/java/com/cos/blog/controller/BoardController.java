@@ -32,8 +32,8 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String findById(@PathVariable int id, Model model) {
         // model.addAttribute("board", boardService.getPost(id));
-        // Board board = boardService.getPostByEntityGraph(id);
-        Board board = boardService.getPostByFetchJoin(id);
+        Board board = boardService.getPostByEntityGraph(id);
+        // Board board = boardService.getPostByFetchJoin(id);
         log.info("@board=======>{}", board);
         model.addAttribute("board", board);
         return "board/detail";

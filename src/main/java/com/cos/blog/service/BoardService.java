@@ -10,6 +10,7 @@ import com.cos.blog.model.Board;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 
+@Transactional(readOnly = true)
 @Service
 public class BoardService {
 
@@ -62,7 +63,9 @@ public class BoardService {
     }
 
     /**
-     * 게시글 단건 조회(fetch join)
+     * 게시글 단건 조회(fetch join) read 함수이나 @Transactional을 명시하지 않으면 조회할 (content) CLOB
+     * 컬럼 관련해서 Unable to access lob stream; nested exception is
+     * org.hibernate.HibernateException: Unable to access lob stream 이 발생한다.
      * 
      * @param id
      * @return

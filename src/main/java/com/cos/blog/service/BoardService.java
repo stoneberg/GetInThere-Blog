@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.blog.dto.BoardReq;
 import com.cos.blog.dto.BoardReq.BoardDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
@@ -114,8 +115,9 @@ public class BoardService {
      * @param user
      */
     @Transactional
-    public Integer addReply(Integer boardId, Reply reply, User user) {
+    public Integer addReply(Integer boardId, BoardReq.ReplyDto replyDto, User user) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("글 찾기 실패 : 아이디를 찾을 수 없습니다."));
+        Reply reply = replyDto.toEntity();
         reply.setUser(user);
         reply.setBoard(board);
         replyRepository.save(reply);

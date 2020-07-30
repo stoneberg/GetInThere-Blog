@@ -30,6 +30,16 @@ const blogBoard = {
             title: $("#title").val(),
             content: $("#content").val()
         };
+        
+        if (!data.title) {
+            alert("title must not be empty!");
+            return;
+        }
+        
+        if (!data.content) {
+            alert("content must not be empty!");
+            return;
+        }
 
         $.ajax({
             type: "POST",
@@ -72,6 +82,16 @@ const blogBoard = {
             title: $("#title").val(),
             content: $("#content").val()
         };
+        
+        if (!data.title) {
+            alert("title must not be empty!");
+            return;
+        }
+        
+        if (!data.content) {
+            alert("content must not be empty!");
+            return;
+        }
 
         $.ajax({
             type: "PUT",
@@ -95,6 +115,11 @@ const blogBoard = {
         const data = {
             content: $("#reply-content").val()
         };
+        
+        if (!data.content) {
+            alert("content must not be empty!");
+            return;
+        }
 
         $.ajax({
             type: "POST",

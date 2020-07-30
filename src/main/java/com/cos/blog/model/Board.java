@@ -63,7 +63,6 @@ public class Board {
 
     @Builder
     public Board(String title, String content, Integer count) {
-        super();
         this.title = title;
         this.content = content;
         this.count = count;

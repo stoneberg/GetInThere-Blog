@@ -14,8 +14,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,6 +25,7 @@ import lombok.ToString;
 @EqualsAndHashCode(exclude = { "board", "user" })
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "blog_board_replay")
 public class Reply {
@@ -45,4 +48,10 @@ public class Reply {
 
     @CreationTimestamp
     private LocalDateTime createDate;
+
+    @Builder
+    public Reply(String content) {
+        this.content = content;
+    }
+
 }

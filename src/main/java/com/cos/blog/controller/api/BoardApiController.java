@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.config.auth.PrincipalDetail;
+import com.cos.blog.dto.BoardReq;
 import com.cos.blog.dto.BoardReq.BoardDto;
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -68,10 +68,9 @@ public class BoardApiController {
      */
 
     @PostMapping("/api/board/{boardId}/reply")
-    public ResponseDto<?> saveReply(@PathVariable("boardId") Integer boardId, @RequestBody Reply reply,
+    public ResponseDto<?> saveReply(@PathVariable("boardId") Integer boardId, @RequestBody BoardReq.ReplyDto replyDto,
             @AuthenticationPrincipal PrincipalDetail principal) {
-        boardService.addReply(boardId, reply, principal.getUser());
-        return new ResponseDto<>(HttpStatus.OK, 1);
+        return new ResponseDto<>(HttpStatus.OK, boardService.addReply(boardId, replyDto, principal.getUser()));
     }
 
 }

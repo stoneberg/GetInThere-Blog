@@ -6,15 +6,15 @@ const blogBoard = {
     init: function() {
         $("#btn-save").on("click", () => {
             console.log("post-save==========>")
-            this.save();
+            this.savePost();
         });
         $("#btn-delete").on("click", () => {
             console.log("post-delete========>")
-            this.deleteById();
+            this.deletePost();
         });
         $("#btn-update").on("click", () => {
             console.log("post-update========>")
-            this.update();
+            this.updatePost();
         });
         $("#btn-reply-save").on("click", (e) => {
             console.log("reply-save========>")
@@ -25,8 +25,8 @@ const blogBoard = {
     /**
      * 게시글 저장
      */
-    save: function()  {
-        let data = {
+    savePost: function()  {
+        const data = {
             title: $("#title").val(),
             content: $("#content").val()
         };
@@ -48,8 +48,8 @@ const blogBoard = {
     /**
      * 게시글 삭제
      */
-    deleteById: function() {
-        let id = $("#id").text();
+    deletePost: function() {
+        const id = $("#id").text();
 
         $.ajax({
             type: "DELETE",
@@ -66,10 +66,9 @@ const blogBoard = {
     /**
      * 게시글 수정
      */
-    update: function() {
-        let id = $("#id").val();
-
-        let data = {
+    updatePost: function() {
+        const id = $("#id").val();
+        const data = {
             title: $("#title").val(),
             content: $("#content").val()
         };
@@ -92,23 +91,22 @@ const blogBoard = {
      * 댓글 작성
      */
     saveReply: function() {
-        let data = {
-            boardId: $("#boardId").val(),
+        const boardId = $("#boardId").val();
+        const data = {
             content: $("#reply-content").val()
         };
-        console.log("data===>", data);
 
         $.ajax({
             type: "POST",
-            url: "/api/board/" + data.boardId + "/reply",
-            //url: `/api/board/${data.boardId}/reply`,
+            url: "/api/board/" + boardId + "/reply",
+            //url: `/api/board/${boardId}/reply`,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         }).done(function(resp) {
             alert("댓글 작성이 완료되었습니다.");
-            location.href = "/board/" + data.boardId;
-            //location.href = `/board/${data.boardId}`;
+            location.href = "/board/" + boardId;
+            //location.href = `/board/${boardId}`;
         }).fail(function(error) {
             alert(JSON.stringify(error));
         });

@@ -31,35 +31,33 @@ public class BoardApiController {
      */
 
     @GetMapping("/api/v1/board/{id}")
-    public ResponseDto<?> findByIdV1(@PathVariable("id") Integer id) {
+    public ResponseDto<?> findPostByIdV1(@PathVariable("id") Integer id) {
         Board board = boardService.getPostByFetchJoin(id);
-        log.info("@board=======>{}", board);
         return new ResponseDto<>(HttpStatus.OK, board);
     }
 
     @GetMapping("/api/v2/board/{id}")
-    public ResponseDto<?> findByIdV2(@PathVariable("id") Integer id) {
+    public ResponseDto<?> findPostByIdV2(@PathVariable("id") Integer id) {
         Board board = boardService.getPostByEntityGraph(id);
-        log.info("@board=======>{}", board);
         return new ResponseDto<>(HttpStatus.OK, board);
     }
 
     @PostMapping("/api/board")
-    public ResponseDto<?> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
+    public ResponseDto<?> savePost(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
         return new ResponseDto<>(HttpStatus.CREATED, boardService.addPost(board, principal.getUser()));
     }
 
     @DeleteMapping("/api/board/{id}")
-    public ResponseDto<?> deleteById(@PathVariable("id") Integer id) {
+    public ResponseDto<?> deletePostById(@PathVariable("id") Integer id) {
         boardService.deletePost(id);
         return new ResponseDto<>(HttpStatus.OK, id);
     }
 
     @PutMapping("/api/board/{id}")
-    public ResponseDto<?> update(@PathVariable("id") Integer id, @RequestBody Board board) {
-        System.out.println("BoardApiController : update : id : " + id);
-        System.out.println("BoardApiController : update : board : " + board.getTitle());
-        System.out.println("BoardApiController : update : board : " + board.getContent());
+    public ResponseDto<?> updatePost(@PathVariable("id") Integer id, @RequestBody Board board) {
+        log.info("BoardApiController : update : id : " + id);
+        log.info("BoardApiController : update : board : " + board.getTitle());
+        log.info("BoardApiController : update : board : " + board.getContent());
         boardService.modifyPost(id, board);
         return new ResponseDto<>(HttpStatus.OK, id);
     }
@@ -69,7 +67,7 @@ public class BoardApiController {
      */
 
     @PostMapping("/api/board/{boardId}/reply")
-    public ResponseDto<?> save(@PathVariable("boardId") Integer boardId, @RequestBody Reply reply,
+    public ResponseDto<?> saveReply(@PathVariable("boardId") Integer boardId, @RequestBody Reply reply,
             @AuthenticationPrincipal PrincipalDetail principal) {
         boardService.addReply(boardId, reply, principal.getUser());
         return new ResponseDto<>(HttpStatus.OK, 1);

@@ -66,6 +66,10 @@ const blogBoard = {
      */
     deletePost: function() {
         const id = $("#id").text();
+        // confirm
+        if (!confirm("삭제 시 하위 댓글까지 모두 삭제됩니다. 삭제하시겠습니까?")) {
+            return;
+        }
 
         $.ajax({
             type: "DELETE",
